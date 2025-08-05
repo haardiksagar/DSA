@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse K Group Visualization</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .step h3 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        
+        .linked-list {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .node {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 18px;
+            min-width: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.2s;
+        }
+        
+        .node:hover {
+            transform: scale(1.05);
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .reversed-node {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .code-snippet {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .variable-box {
+            display: inline-block;
+            background: #4299e1;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .group-box {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .final-result {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Reverse Nodes in K-Group Algorithm</h1>
+        
+        <div class="step">
+            <h3>📝 Problem: Reverse every k nodes in a linked list</h3>
+            <p><strong>Input:</strong> head = [1,2,3,4,5,6,7,8], k = 3</p>
+            <p><strong>Goal:</strong> Reverse nodes in groups of 3</p>
+        </div>
+
+        <div class="step">
+            <h3>🎯 Initial State</h3>
+            <div class="linked-list">
+                <div class="node">1</div>
+                <div class="arrow">→</div>
+                <div class="node">2</div>
+                <div class="arrow">→</div>
+                <div class="node">3</div>
+                <div class="arrow">→</div>
+                <div class="node">4</div>
+                <div class="arrow">→</div>
+                <div class="node">5</div>
+                <div class="arrow">→</div>
+                <div class="node">6</div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+                <div class="arrow">→</div>
+                <div style="color: #999;">NULL</div>
+            </div>
+            <p><span class="variable-box">temp = 1</span> <span class="variable-box">prevNode = NULL</span> <span class="variable-box">k = 3</span></p>
+        </div>
+
+        <div class="step">
+            <h3>🔍 Iteration 1: Process First Group [1,2,3]</h3>
+            
+            <h4>Step 1: Find Kth Node</h4>
+            <div class="group-box">
+                <div class="linked-list">
+                    <div class="node highlight">1</div>
+                    <div class="arrow">→</div>
+                    <div class="node highlight">2</div>
+                    <div class="arrow">→</div>
+                    <div class="node highlight">3</div>
+                    <div class="arrow">→</div>
+                    <div class="node">4</div>
+                    <div class="arrow">→</div>
+                    <div class="node">5</div>
+                    <div class="arrow">→</div>
+                    <div class="node">6</div>
+                    <div class="arrow">→</div>
+                    <div class="node">7</div>
+                    <div class="arrow">→</div>
+                    <div class="node">8</div>
+                </div>
+            </div>
+            <div class="code-snippet">ListNode* KthNode = findKthNode(temp, 3); // Returns node 3</div>
+            <p><span class="variable-box">KthNode = 3</span> <span class="variable-box">nextNode = 4</span></p>
+
+            <h4>Step 2: Disconnect and Reverse</h4>
+            <div class="code-snippet">KthNode->next = NULL; // Disconnect: [1→2→3] [4→5→6→7→8]
+reverse(temp); // Reverse [1→2→3] to [3→2→1]</div>
+            
+            <div class="linked-list">
+                <div class="group-box">
+                    <div class="node reversed-node">3</div>
+                    <div class="arrow">→</div>
+                    <div class="node reversed-node">2</div>
+                    <div class="arrow">→</div>
+                    <div class="node reversed-node">1</div>
+                </div>
+                <div style="margin: 0 20px; color: #999;">disconnected</div>
+                <div class="node">4</div>
+                <div class="arrow">→</div>
+                <div class="node">5</div>
+                <div class="arrow">→</div>
+                <div class="node">6</div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+            </div>
+
+            <h4>Step 3: Update Head and Connect</h4>
+            <div class="code-snippet">if(temp == head) head = KthNode; // head becomes 3
+prevNode = temp; // prevNode = 1 (original first node, now last in group)
+temp = nextNode; // temp = 4 (start of next group)</div>
+        </div>
+
+        <div class="step">
+            <h3>🔄 Iteration 2: Process Second Group [4,5,6]</h3>
+            
+            <div class="linked-list">
+                <div class="node reversed-node">3</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">2</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">1</div>
+                <div class="arrow">→</div>
+                <div class="group-box">
+                    <div class="node highlight">4</div>
+                    <div class="arrow">→</div>
+                    <div class="node highlight">5</div>
+                    <div class="arrow">→</div>
+                    <div class="node highlight">6</div>
+                </div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+            </div>
+
+            <h4>After reversing [4,5,6] → [6,5,4]:</h4>
+            <div class="linked-list">
+                <div class="node reversed-node">3</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">2</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">1</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">6</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">5</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">4</div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+            </div>
+            <p><span class="variable-box">prevNode = 4</span> <span class="variable-box">temp = 7</span></p>
+        </div>
+
+        <div class="step">
+            <h3>⚠️ Iteration 3: Handle Remaining Nodes [7,8]</h3>
+            <div class="code-snippet">ListNode* KthNode = findKthNode(temp, 3); // Returns NULL (not enough nodes)</div>
+            
+            <p><strong>Since KthNode == NULL:</strong></p>
+            <div class="code-snippet">if(prevNode) prevNode->next = temp; // Connect node 4 to node 7
+break; // Exit loop - don't reverse incomplete group</div>
+            
+            <div class="linked-list">
+                <div class="node reversed-node">3</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">2</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">1</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">6</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">5</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">4</div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+            </div>
+        </div>
+
+        <div class="final-result">
+            <h3>🎉 Final Result</h3>
+            <div class="linked-list">
+                <div class="node reversed-node">3</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">2</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">1</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">6</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">5</div>
+                <div class="arrow">→</div>
+                <div class="node reversed-node">4</div>
+                <div class="arrow">→</div>
+                <div class="node">7</div>
+                <div class="arrow">→</div>
+                <div class="node">8</div>
+            </div>
+            <p><strong>Original:</strong> [1,2,3,4,5,6,7,8] → <strong>Result:</strong> [3,2,1,6,5,4,7,8]</p>
+        </div>
+
+        <div class="step">
+            <h3>🔧 Key Functions Explained</h3>
+            
+            <h4>1. findKthNode(cur, k)</h4>
+            <div class="code-snippet">// Finds the kth node from current position
+// k=3: cur → next → next (moves 2 times, k-1)
+// Returns the kth node or NULL if not enough nodes</div>
+
+            <h4>2. reverse(head)</h4>
+            <div class="code-snippet">// Standard linked list reversal
+// [1→2→3] becomes [3→2→1]
+// Returns new head (previously tail)</div>
+
+            <h4>3. Main Algorithm Logic</h4>
+            <div class="code-snippet">// 1. Find kth node in current group
+// 2. If found: disconnect, reverse, reconnect
+// 3. If not found: connect remaining nodes and exit
+// 4. Update pointers for next iteration</div>
+        </div>
+    </div>
+</body>
+</html>
